@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthy Meal Plan 7 Days</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #8BC34A;
+            --card-bg-color: #f9f9f9;
+            --text-color: #333;
+            --heading-color: #2e7d32;
+            --border-radius: 12px;
+            --box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Kanit', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #e8f5e9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            width: 100%;
+            max-width: 900px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 600;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        main {
+            width: 100%;
+            max-width: 900px;
+        }
+
+        section {
+            background-color: white;
+            padding: 30px;
+            margin-bottom: 25px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        h2 {
+            color: var(--heading-color);
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            border-bottom: 3px solid var(--secondary-color);
+            padding-bottom: 5px;
+            display: inline-block;
+        }
+        
+        #progress-tracker {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        #progress-bar-container {
+            background-color: #ddd;
+            border-radius: 20px;
+            height: 30px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        
+        #progress-bar {
+            height: 100%;
+            width: 0%;
+            background-color: var(--primary-color);
+            transition: width 0.5s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .key-points ul {
+            list-style-type: none;
+        }
+
+        .key-points li {
+            background-color: var(--card-bg-color);
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .meal-cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .meal-card {
+            background-color: var(--card-bg-color);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .meal-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-header {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .meal-item {
+            margin-bottom: 15px;
+        }
+
+        .meal-item h3 {
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .meal-item p {
+            font-size: 0.95rem;
+            margin-left: 10px;
+        }
+        
+        .progress-btn {
+            display: block;
+            width: calc(100% - 40px);
+            margin: 0 auto 20px;
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .progress-btn.completed {
+            background-color: #A5D6A7;
+            cursor: not-allowed;
+        }
+        
+        .progress-btn:hover:not(.completed) {
+            background-color: #43A047;
+        }
+
+        .checkmark {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 2rem;
+            color: var(--primary-color);
+            display: none;
+        }
+
+        .completed .checkmark {
+            display: block;
+        }
+        
+        .cta-section {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: var(--border-radius);
+            margin-top: 25px;
+        }
+
+        .cta-section h2 {
+            color: white;
+            border-bottom: 3px solid white;
+            display: inline-block;
+        }
+        
+        .cta-section p {
+            font-size: 1.2rem;
+            margin: 20px 0;
+        }
+
+        .cta-section a {
+            display: inline-block;
+            background-color: white;
+            color: var(--primary-color);
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .cta-section a:hover {
+            transform: scale(1.05);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            width: 100%;
+            max-width: 900px;
+            color: #888;
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            section {
+                padding: 20px;
+            }
+
+            .meal-cards-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Healthy Meal Plan 7 Days</h1>
+        <p>สูตรคุมคาร์บ หุ่นลีน สร้างสุขภาพดี</p>
+    </header>
+
+    <main>
+        <section class="intro-section">
+            <p>ขอต้อนรับเข้าสู่แผนการกินเพื่อสุขภาพ 7 วัน ที่ออกแบบมาเพื่อช่วยให้คุณบรรลุเป้าหมายได้อย่างมีประสิทธิภาพ แผนนี้เน้นที่การ **ควบคุมปริมาณคาร์โบไฮเดรต** โดยเฉพาะในช่วงเย็น เพื่อลดการสะสมไขมัน และยังคงได้รับสารอาหารครบถ้วนในแต่ละมื้อ</p>
+        </section>
+
+        <section id="progress-tracker">
+            <h2>🎉 ความก้าวหน้าของคุณ</h2>
+            <p>มาติดตามกันว่าคุณทำตามแผนได้กี่วันแล้ว!</p>
+            <div id="progress-bar-container">
+                <div id="progress-bar">0%</div>
+            </div>
+        </section>
+
+        <section class="key-points">
+            <h2>🔑 จุดเด่นของแผนนี้</h2>
+            <ul>
+                <li><strong>มื้อเช้า:</strong> เน้นคาร์บเชิงซ้อนประมาณ 100 กรัม เพื่อให้มีพลังงานเพียงพอตลอดวันและช่วยให้อิ่มนาน</li>
+                <li><strong>มื้อเย็น:</strong> เป็นอาหารประเภท **โลว์คาร์บ (Low-Carb)** เพื่อลดภาระของร่างกายก่อนนอนและป้องกันการสะสมไขมัน</li>
+                <li><strong>โปรตีน:</strong> ทุกมื้อมีโปรตีนคุณภาพดี 100–120 กรัม เพื่อรักษามวลกล้ามเนื้อและช่วยให้อิ่มนาน</li>
+                <li><strong>ผัก:</strong> จัดเต็มด้วยผักหลากหลายชนิด 250–400 กรัมต่อมื้อ เพื่อให้ร่างกายได้รับไฟเบอร์อย่างเพียงพอ</li>
+                <li><strong>ผลไม้:</strong> เลือกผลไม้ที่มีค่า **ดัชนีน้ำตาลต่ำ (Low GI)** เพียงวันละ 1-2 ส่วน เพื่อควบคุมระดับน้ำตาลในเลือด</li>
+            </ul>
+        </section>
+
+        <section class="meal-plan">
+            <h2>📅 ตารางอาหาร 7 วัน</h2>
+            <div id="meal-cards" class="meal-cards-container">
+                </div>
+        </section>
+        
+        <section class="cta-section">
+            <h2>ทำครบ 7 วันแล้วใช่ไหม?</h2>
+            <p>ถ้าทำตามแผนครบ 7 วันแล้ว ส่งผลลัพธ์ให้โค้ชของคุณที่ LINE OA เพื่อรับรางวัลพิเศษได้เลย! ^_^</p>
+            <a href="https://lin.ee/LZzwkdX" target="_blank">ส่งผลลัพธ์ให้โค้ช</a>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Healthy Meal Plan. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        const mealData = [
+            { day: "วันจันทร์", theme: "เริ่มต้นสัปดาห์อย่างสดใส", meals: [{ time: "มื้อเช้า (คาร์บ 100g)", menu: "ข้าวกล้อง 100 กรัม, อกไก่ย่าง 100 กรัม, ผัก 5 สีลวก/สด 300 กรัม", reason: "ช่วยให้พลังงานและไฟเบอร์สูง" }, { time: "มื้อเย็น (โลว์คาร์บ)", menu: "ปลาอินทรีย์ย่าง 120 กรัม, แกงเลียงผักรวม 400 กรัม, ฝรั่ง 100 กรัม", reason: "เน้นโปรตีนจากปลาและผัก ช่วยดีท็อกซ์ลำไส้" }] },
+            { day: "วันอังคาร", theme: "เพิ่มไขมันดีและภูมิคุ้มกัน", meals: [{ time: "มื้อเช้า (คาร์บ 100g)", menu: "ข้าวสวย 100 กรัม, ไข่ต้ม 2 ฟอง, ผัดผักบุ้งไฟแดง 250 กรัม", reason: "ได้รับไขมันดีจากไข่แดงและไฟเบอร์เต็มที่" }, { time: "มื้อเย็น (โลว์คาร์บ)", menu: "อกไก่อบสมุนไพร 120 กรัม, ยำเห็ดรวม 300 กรัม, แตงกวา/ผักสด 200 กรัม", reason: "โปรตีนสูงจากอกไก่และเบต้า-กลูแคนจากเห็ดช่วยเสริมภูมิคุ้มกัน" }] },
+            { day: "วันพุธ", theme: "เติมพลังด้วยเมนูง่ายๆ", meals: [{ time: "มื้อเช้า (คาร์บ 100g)", menu: "ข้าวกล้อง 100 กรัม, อกไก่ 100 กรัม, ต้มจืดเต้าหู้สาหร่าย 250 กรัม, ผักสด 100 กรัม", reason: "เมนูง่ายๆ ที่ให้พลังงานและสารอาหารครบถ้วน" }, { time: "มื้อเย็น (โลว์คาร์บ)", menu: "ลาบอกไก่ 120 กรัม, ผักสดแกล้ม 200 กรัม, ชมพู่ 120 กรัม", reason: "โปรตีนสูงแต่เบาท้อง ไม่รบกวนการนอนหลับ" }] },
+            { day: "วันพฤหัสบดี", theme: "ได้ไขมันโอเมก้า 3 ราคาประหยัด", meals: [{ time: "มื้อเช้า (คาร์บ 100g)", menu: "ข้าวสวย 100 กรัม, ปลาทูย่าง 1 ตัว, ผัดผักรวม 250 กรัม, ไข่ต้ม 1 ฟอง", reason: "ปลาทูเป็นแหล่งโอเมก้า 3 ที่หาซื้อง่ายและราคาไม่แพง" }, { time: "มื้อเย็น (โลว์คาร์บ)", menu: "ไก่ย่าง 120 กรัม, ส้มตำไทย (ไม่ใส่น้ำตาล) 300 กรัม, แตงกวา/ผักสด 200 กรัม", reason: "จัดเต็มด้วยผักในมื้อเย็นและโปรตีนลีน" }] },
+            { day: "วันศุกร์", theme: "อิ่มอร่อยกับเมนูประจำบ้าน", meals: [{ time: "มื้อเช้า (คาร์บ 100g)", menu: "ข้าวกล้อง 100 กรัม, ไข่เจียวหอมใหญ่ 2 ฟอง, บรอกโคลี + แครอทนึ่ง 250 กรัม", reason: "ได้โปรตีนจากไข่และใยอาหารจากผักเต็มๆ" }, { time: "มื้อเย็น (โลว์คาร์บ)", menu: "สุกี้น้ำใส (ไม่ใส่วุ้นเส้น) + ผักเยอะ 300 กรัม + ไก่ 100 กรัม + เต้าหู้ 50 กรัม, ฝรั่ง 100 กรัม", reason: "เป็นเมนูที่อิ่มท้องด้วยไฟเบอร์แต่คาร์บต่ำ" }] },
+            { day: "วันเสาร์", theme: "บำรุงสมองและหัวใจ", meals: [{ time: "มื้อเช้า (คาร์บ 100g)", menu: "ข้าวสวย 100 กรัม, ปลาแซลมอนย่าง 120 กรัม, สลัดผักรวม 250 กรัม", reason: "ได้ไขมันดี DHA/EPA จากปลาแซลมอน" }, { time: "มื้อเย็น (โลว์คาร์บ)", menu: "ยำวุ้นเส้นผักรวม 300 กรัม, โปรตีนจากกุ้ง/อกไก่ 100 กรัม, ผักสดแนม 150 กรัม", reason: "เมนูยำช่วยให้ร่างกายได้รับสารต้านอนุมูลอิสระจากสมุนไพรต่างๆ" }] },
+            { day: "วันอาทิตย์", theme: "ปิดท้ายสัปดาห์ด้วยสมุนไพร", meals: [{ time: "มื้อเช้า (คาร์บ 100g)", menu: "ข้าวกล้อง 100 กรัม, ไก่ต้มสมุนไพร 120 กรัม, แกงเลียงผักรวม 300 กรัม", reason: "เริ่มต้นวันด้วยเมนูที่ช่วยลดการอักเสบ" }, { time: "มื้อเย็น (โลว์คาร์บ)", menu: "ต้มยำกุ้งน้ำใส 250 กรัม, ผักสด/ผักลวก 200 กรัม, ชมพู่/ส้ม 100 กรัม", reason: "เมนูสมุนไพรอย่างตะไคร้และใบมะกรูดมีฤทธิ์ต้านอนุมูลอิสระ" }] }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const mealCardsContainer = document.getElementById('meal-cards');
+            const progressBar = document.getElementById('progress-bar');
+            let completedDays = 0;
+
+            const updateProgressBar = () => {
+                const totalDays = mealData.length;
+                const percentage = (completedDays / totalDays) * 100;
+                progressBar.style.width = `${percentage}%`;
+                progressBar.textContent = `${Math.round(percentage)}%`;
+                
+                localStorage.setItem('completedDays', completedDays);
+            };
+
+            const loadProgress = () => {
+                const savedProgress = localStorage.getItem('completedDays');
+                if (savedProgress) {
+                    completedDays = parseInt(savedProgress, 10);
+                }
+                updateProgressBar();
+            };
+
+            const createMealCards = () => {
+                mealData.forEach((dayData, index) => {
+                    const card = document.createElement('div');
+                    card.classList.add('meal-card');
+                    card.dataset.dayIndex = index;
+
+                    const cardHeader = document.createElement('div');
+                    cardHeader.classList.add('card-header');
+                    cardHeader.innerHTML = `${dayData.day}<br>${dayData.theme}`;
+                    card.appendChild(cardHeader);
+
+                    const cardContent = document.createElement('div');
+                    cardContent.classList.add('card-content');
+
+                    dayData.meals.forEach(meal => {
+                        const mealItem = document.createElement('div');
+                        mealItem.classList.add('meal-item');
+
+                        const mealTime = document.createElement('h3');
+                        mealTime.textContent = meal.time;
+                        mealItem.appendChild(mealTime);
+
+                        const mealMenu = document.createElement('p');
+                        mealMenu.textContent = `เมนู: ${meal.menu}`;
+                        mealItem.appendChild(mealMenu);
+
+                        const mealReason = document.createElement('p');
+                        mealReason.textContent = `เหตุผล: ${meal.reason}`;
+                        mealItem.appendChild(mealReason);
+
+                        cardContent.appendChild(mealItem);
+                    });
+
+                    card.appendChild(cardContent);
+                    
+                    const completeBtn = document.createElement('button');
+                    completeBtn.classList.add('progress-btn');
+                    completeBtn.textContent = 'ฉันทำตามวันนี้แล้ว';
+                    card.appendChild(completeBtn);
+
+                    const checkmark = document.createElement('span');
+                    checkmark.classList.add('checkmark');
+                    checkmark.textContent = '✔️';
+                    card.appendChild(checkmark);
+
+                    completeBtn.addEventListener('click', () => {
+                        if (!card.classList.contains('completed')) {
+                            card.classList.add('completed');
+                            completeBtn.classList.add('completed');
+                            completeBtn.textContent = 'วันนี้ทำสำเร็จแล้ว!';
+                            completedDays++;
+                            updateProgressBar();
+                        }
+                    });
+
+                    mealCardsContainer.appendChild(card);
+                });
+            };
+
+            loadProgress();
+            createMealCards();
+            
+            const cards = document.querySelectorAll('.meal-card');
+            for(let i = 0; i < completedDays; i++) {
+                if (cards[i]) {
+                    cards[i].classList.add('completed');
+                    const btn = cards[i].querySelector('.progress-btn');
+                    if (btn) {
+                        btn.classList.add('completed');
+                        btn.textContent = 'วันนี้ทำสำเร็จแล้ว!';
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
