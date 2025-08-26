@@ -4,34 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Healthy Meal Plan 7 Days</title>
-
-  <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;700&display=swap" rel="stylesheet">
-  <!-- LINE LIFF -->
   <script src="https://static.line-scdn.net/liff/edge/versions/2.26.0/sdk.js"></script>
-
   <style>
-    :root{
-      --bg:#f0f7f2;--bg-soft:#e8f5e9;--surface:#ffffffcc;--surface-strong:#fff;
-      --primary:#2e7d32;--primary-600:#1b5e20;--primary-300:#66bb6a;
-      --text:#1f2937;--muted:#6b7280;--ring:#34d399;--radius:14px;--shadow:0 8px 24px rgba(0,0,0,.08);
-      --blur:10px;--card-grad:linear-gradient(180deg,rgba(255,255,255,.75),rgba(255,255,255,.95));
-    }
-    @media(prefers-color-scheme:dark){
-      :root{--bg:#0b1210;--bg-soft:#0f1a14;--surface:#0f1a14cc;--surface-strong:#111c17;
-        --primary:#7ddc8a;--primary-600:#58b86b;--primary-300:#a8e8b1;--text:#e5e7eb;--muted:#94a3b8;
-        --ring:#34d399;--card-grad:linear-gradient(180deg,rgba(17,28,23,.7),rgba(17,28,23,.95));
-        --shadow:0 8px 24px rgba(0,0,0,.35);}
-    }
-    *{box-sizing:border-box}
-    body{margin:0;font-family:'Kanit',system-ui,Segoe UI,Roboto,sans-serif;background:
+    :root{--bg:#f0f7f2;--bg-soft:#e8f5e9;--surface:#ffffffcc;--surface-strong:#fff;--primary:#2e7d32;--primary-600:#1b5e20;--primary-300:#66bb6a;--text:#1f2937;--muted:#6b7280;--ring:#34d399;--radius:14px;--shadow:0 8px 24px rgba(0,0,0,.08);--blur:10px;--card-grad:linear-gradient(180deg,rgba(255,255,255,.75),rgba(255,255,255,.95))}
+    @media(prefers-color-scheme:dark){:root{--bg:#0b1210;--bg-soft:#0f1a14;--surface:#0f1a14cc;--surface-strong:#111c17;--primary:#7ddc8a;--primary-600:#58b86b;--primary-300:#a8e8b1;--text:#e5e7eb;--muted:#94a3b8;--ring:#34d399;--card-grad:linear-gradient(180deg,rgba(17,28,23,.7),rgba(17,28,23,.95));--shadow:0 8px 24px rgba(0,0,0,.35)}}
+    *{box-sizing:border-box} body{margin:0;font-family:'Kanit',system-ui,Segoe UI,Roboto,sans-serif;background:
       radial-gradient(1200px 600px at 100% 0,var(--bg-soft) 0%,transparent 60%),
       radial-gradient(800px 400px at 0 100%,var(--bg-soft) 0%,transparent 60%),
-      var(--bg);
-      color:var(--text);line-height:1.65;padding-bottom:56px}
-    .appbar{position:sticky;top:0;z-index:20;backdrop-filter:blur(var(--blur));
-      background:linear-gradient(180deg,rgba(255,255,255,.7),rgba(255,255,255,.45));
-      border-bottom:1px solid rgba(0,0,0,.06);box-shadow:0 6px 16px rgba(0,0,0,.04)}
+      var(--bg);color:var(--text);line-height:1.65;padding-bottom:56px}
+    .appbar{position:sticky;top:0;z-index:20;backdrop-filter:blur(var(--blur));background:linear-gradient(180deg,rgba(255,255,255,.7),rgba(255,255,255,.45));border-bottom:1px solid rgba(0,0,0,.06);box-shadow:0 6px 16px rgba(0,0,0,.04)}
     @media(prefers-color-scheme:dark){.appbar{background:linear-gradient(180deg,rgba(17,28,23,.7),rgba(17,28,23,.45));border-color:rgba(255,255,255,.06)}}
     .appbar-inner{max-width:960px;margin:0 auto;padding:14px 16px;display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center}
     .brand{display:flex;align-items:center;gap:10px}
@@ -76,7 +58,6 @@
   </style>
 </head>
 <body>
-  <!-- AppBar -->
   <header class="appbar">
     <div class="appbar-inner">
       <div class="brand">
@@ -93,19 +74,17 @@
   </header>
 
   <main class="container" id="app">
-    <!-- Hero -->
-    <section class="hero" aria-label="ภาพรวมแผน">
+    <section class="hero">
       <h2>เริ่มวันนี้ เพื่อสุขภาพที่ดีขึ้นทุกวัน</h2>
-      <p>แผน 7 วันนี้ออกแบบให้ <strong>มื้อเช้าได้คาร์บ 100 กรัมเท่านั้น</strong> และ <strong>มื้อเย็นเป็น Low-Carb</strong> พร้อมโปรตีนลีนและผักหลากสี</p>
+      <p>มื้อเช้า <strong>คาร์บ 100 กรัม</strong> มื้อเย็น <strong>Low-Carb</strong> โปรตีนลีน + ผักหลากสี</p>
       <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="ความคืบหน้ารวม">
         <div class="bar" id="bar">0%</div>
       </div>
     </section>
 
-    <!-- เก็บข้อมูลติดต่อครั้งแรก -->
     <section class="card" id="profileCard" hidden>
       <h3>📇 ข้อมูลติดต่อ (ครั้งแรก)</h3>
-      <p>กรุณากรอกเบอร์โทรและอีเมลเพื่อให้โค้ชติดต่อกลับได้สะดวก</p>
+      <p>กรุณากรอกเพื่อให้โค้ชติดต่อกลับ</p>
       <form class="form" id="profileForm">
         <input id="phone" type="tel" inputmode="tel" placeholder="เบอร์โทร" required />
         <input id="email" type="email" inputmode="email" placeholder="อีเมล" required />
@@ -113,7 +92,6 @@
       </form>
     </section>
 
-    <!-- จุดเด่น -->
     <section class="card">
       <h3>🔑 จุดเด่นของแผน</h3>
       <ul class="kp">
@@ -124,7 +102,6 @@
       </ul>
     </section>
 
-    <!-- ตาราง 7 วัน -->
     <section class="card">
       <h3>📅 ตารางอาหาร 7 วัน</h3>
       <div id="grid" class="grid" aria-live="polite"></div>
@@ -133,77 +110,71 @@
     <footer>© 2024 Healthy Meal Plan. All rights reserved.</footer>
   </main>
 
-  <!-- Sticky Actions -->
   <div class="actions" role="region" aria-label="การกระทำด่วน">
     <div class="actions-inner">
       <button class="btn" id="sendBtn">ส่งผลลัพธ์ให้โค้ชผ่าน LINE</button>
-      <button class="btn btn-outline" id="resetBtn" title="ล้างความคืบหน้าทั้งหมด">รีเซ็ตความคืบหน้า</button>
+      <button class="btn btn-outline" id="resetBtn">รีเซ็ตความคืบหน้า</button>
     </div>
   </div>
 
   <script>
-    /* ========= ตั้งค่า ========= */
-    const GAS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbywfpVAtqQIz0s6mUG_tirL6iqHf1aWR-FOT87kTMD0muaiC2ZdU3ddeMF1AKRrTMvA/exec';
-    const LIFF_ID = '2007996778-xk36NJZZ'; // เปลี่ยนได้ถ้าใช้ LIFF อื่น
+    // ===== CONFIG =====
+    const GAS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyNKjdj-fCnZlfy7x4fmHScirMGEfHjvJmHKpGn-XO3UBzX5o_3ubERrYTLikIfLKWAdw/exec';
+    const LIFF_ID = '2007996778-xk36NJZZ';
     const STORAGE_KEY = 'mealPlan.completed.v2';
     const OFFLINE_KEY = 'mealPlan.queue';
-    const PROFILE_KEY = 'mealPlan.profile.saved'; // boolean
+    const PROFILE_KEY = 'mealPlan.profile.saved';
 
-    /* ========= ข้อมูลเมนู ========= */
+    // ===== DATA =====
     const mealData = [
-      { day: "วันจันทร์", theme: "เริ่มต้นสัปดาห์อย่างสดใส", meals: [
-        { time: "มื้อเช้า (คาร์บ 100g)", menu: "ข้าวกล้อง 100 กรัม, อกไก่ย่าง 100 กรัม, ผัก 5 สีลวก/สด 300 กรัม", reason: "คาร์บเชิงซ้อน + โปรตีนลีน + ใยอาหารสูง อิ่มนานไม่พุ่งน้ำตาล" },
-        { time: "มื้อเย็น (โลว์คาร์บ)", menu: "ปลาอินทรีย์ย่าง 120 กรัม, แกงเลียงผักรวม 400 กรัม, ฝรั่ง 100 กรัม", reason: "โปรตีนจากปลา + ผักหลากสี ดีต่อระบบขับถ่าย" }
+      { day:"วันจันทร์", theme:"เริ่มต้นสัปดาห์อย่างสดใส", meals:[
+        { time:"มื้อเช้า (คาร์บ 100g)", menu:"ข้าวกล้อง 100 กรัม, อกไก่ย่าง 100 กรัม, ผัก 5 สี 300 กรัม", reason:"คาร์บเชิงซ้อน + โปรตีนลีน + ใยอาหารสูง" },
+        { time:"มื้อเย็น (โลว์คาร์บ)", menu:"ปลาอินทรีย์ย่าง 120 กรัม, แกงเลียง 400 กรัม, ฝรั่ง 100 กรัม", reason:"โปรตีนจากปลา + ผักหลากสี" }
       ]},
-      { day: "วันอังคาร", theme: "เพิ่มไขมันดีและภูมิคุ้มกัน", meals: [
-        { time: "มื้อเช้า (คาร์บ 100g)", menu: "ข้าวสวย 100 กรัม, ไข่ต้ม 2 ฟอง, ผัดผักบุ้งไฟแดง 250 กรัม", reason: "ได้โคลีนและไขมันดีจากไข่แดง + ไฟเบอร์จากผัก" },
-        { time: "มื้อเย็น (โลว์คาร์บ)", menu: "อกไก่อบสมุนไพร 120 กรัม, ยำเห็ดรวม 300 กรัม, แตงกวา/ผักสด 200 กรัม", reason: "โปรตีนลีน + เบต้า-กลูแคนจากเห็ด เสริมภูมิคุ้มกัน" }
+      { day:"วันอังคาร", theme:"ไขมันดีและภูมิคุ้มกัน", meals:[
+        { time:"มื้อเช้า (คาร์บ 100g)", menu:"ข้าวสวย 100 กรัม, ไข่ต้ม 2 ฟอง, ผัดผักบุ้ง 250 กรัม", reason:"ไข่แดงมีโคลีน + ไฟเบอร์สูง" },
+        { time:"มื้อเย็น (โลว์คาร์บ)", menu:"อกไก่อบสมุนไพร 120 กรัม, ยำเห็ดรวม 300 กรัม, แตงกวา 200 กรัม", reason:"โปรตีนลีน + เบต้า-กลูแคน" }
       ]},
-      { day: "วันพุธ", theme: "เติมพลังด้วยเมนูง่ายๆ", meals: [
-        { time: "มื้อเช้า (คาร์บ 100g)", menu: "ข้าวกล้อง 100 กรัม, อกไก่ 100 กรัม, ต้มจืดเต้าหู้สาหร่าย 250 กรัม, ผักสด 100 กรัม", reason: "ย่อยง่าย ได้ไอโอดีน/แคลเซียมจากสาหร่ายและเต้าหู้" },
-        { time: "มื้อเย็น (โลว์คาร์บ)", menu: "ลาบอกไก่ 120 กรัม, ผักสดแกล้ม 200 กรัม, ชมพู่ 120 กรัม", reason: "โปรตีนสูง เบาท้อง ไม่รบกวนการนอน" }
+      { day:"วันพุธ", theme:"เติมพลังแบบง่าย", meals:[
+        { time:"มื้อเช้า (คาร์บ 100g)", menu:"ข้าวกล้อง 100 กรัม, อกไก่ 100 กรัม, ต้มจืดเต้าหู้สาหร่าย 250 กรัม, ผักสด 100 กรัม", reason:"ย่อยง่าย ไอโอดีน/แคลเซียม" },
+        { time:"มื้อเย็น (โลว์คาร์บ)", menu:"ลาบอกไก่ 120 กรัม, ผักสด 200 กรัม, ชมพู่ 120 กรัม", reason:"โปรตีนสูง เบาท้อง" }
       ]},
-      { day: "วันพฤหัสบดี", theme: "โอเมก้า-3 ราคาประหยัด", meals: [
-        { time: "มื้อเช้า (คาร์บ 100g)", menu: "ข้าวสวย 100 กรัม, ปลาทูย่าง 1 ตัว (~100 กรัม), ผัดผักรวม 250 กรัม, ไข่ต้ม 1 ฟอง", reason: "ปลาทูหาได้ง่าย ให้โอเมก้า-3 ดีต่อหัวใจ" },
-        { time: "มื้อเย็น (โลว์คาร์บ)", menu: "ไก่ย่าง 120 กรัม, ส้มตำไทย (ไม่ใส่น้ำตาล) 300 กรัม, แตงกวา/ผักสด 200 กรัม", reason: "ผักจัดเต็ม ลดคาร์บมื้อเย็น" }
+      { day:"วันพฤหัสบดี", theme:"โอเมก้า-3 ประหยัด", meals:[
+        { time:"มื้อเช้า (คาร์บ 100g)", menu:"ข้าวสวย 100 กรัม, ปลาทูย่าง ~100 กรัม, ผัดผักรวม 250 กรัม, ไข่ต้ม 1 ฟอง", reason:"ปลาทูหาได้ง่าย" },
+        { time:"มื้อเย็น (โลว์คาร์บ)", menu:"ไก่ย่าง 120 กรัม, ส้มตำไทย 300 กรัม, แตงกวา 200 กรัม", reason:"ผักจัดเต็ม ลดคาร์บ" }
       ]},
-      { day: "วันศุกร์", theme: "อิ่มอร่อยแบบบ้านๆ", meals: [
-        { time: "มื้อเช้า (คาร์บ 100g)", menu: "ข้าวกล้อง 100 กรัม, ไข่เจียวหอมใหญ่ 2 ฟอง (น้ำมัน 1 ชช.), บรอกโคลี+แครอทนึ่ง 250 กรัม", reason: "โปรตีน + ใยอาหารสูง ช่วยคุมความหิว" },
-        { time: "มื้อเย็น (โลว์คาร์บ)", menu: "สุกี้น้ำใส (ไม่ใส่วุ้นเส้น) ผัก 300 กรัม + ไก่ 100 กรัม + เต้าหู้ 50 กรัม, ฝรั่ง 100 กรัม", reason: "อิ่มจากผัก โปรตีนครบ แต่คาร์บต่ำ" }
+      { day:"วันศุกร์", theme:"อิ่มอร่อยแบบบ้านๆ", meals:[
+        { time:"มื้อเช้า (คาร์บ 100g)", menu:"ข้าวกล้อง 100 กรัม, ไข่เจียวหอมใหญ่ 2 ฟอง (น้ำมัน 1 ชช.), บรอกโคลี+แครอท 250 กรัม", reason:"โปรตีน + ใยอาหารสูง" },
+        { time:"มื้อเย็น (โลว์คาร์บ)", menu:"สุกี้น้ำใสไม่ใส่วุ้นเส้น ผัก 300 กรัม + ไก่ 100 กรัม + เต้าหู้ 50 กรัม, ฝรั่ง 100 กรัม", reason:"อิ่มจากผัก โปรตีนครบ" }
       ]},
-      { day: "วันเสาร์", theme: "บำรุงสมองและหัวใจ", meals: [
-        { time: "มื้อเช้า (คาร์บ 100g)", menu: "ข้าวสวย 100 กรัม, ปลาแซลมอนย่าง 120 กรัม, สลัดผักรวม 250 กรัม (น้ำสลัดใส)", reason: "DHA/EPA จากปลา ช่วยสมาธิและผิวพรรณ" },
-        { time: "มื้อเย็น (โลว์คาร์บ)", menu: "ยำวุ้นเส้นผักรวม 300 กรัม + โปรตีนจากกุ้ง/อกไก่ 100 กรัม, ผักสดแนม 150 กรัม", reason: "สมุนไพรในยำมีสารต้านอนุมูลอิสระ" }
+      { day:"วันเสาร์", theme:"บำรุงสมองและหัวใจ", meals:[
+        { time:"มื้อเช้า (คาร์บ 100g)", menu:"ข้าวสวย 100 กรัม, แซลมอนย่าง 120 กรัม, สลัดผัก 250 กรัม", reason:"DHA/EPA ช่วยสมาธิ" },
+        { time:"มื้อเย็น (โลว์คาร์บ)", menu:"ยำวุ้นเส้นผักรวม 300 กรัม + โปรตีน 100 กรัม, ผักสด 150 กรัม", reason:"สารต้านอนุมูลอิสระจากสมุนไพร" }
       ]},
-      { day: "วันอาทิตย์", theme: "ปิดสัปดาห์ด้วยสมุนไพร", meals: [
-        { time: "มื้อเช้า (คาร์บ 100g)", menu: "ข้าวกล้อง 100 กรัม, ไก่ต้มสมุนไพร 120 กรัม, แกงเลียงผักรวม 300 กรัม", reason: "ตะไคร้ ใบมะกรูด ลดอักเสบ สดชื่น" },
-        { time: "มื้อเย็น (โลว์คาร์บ)", menu: "ต้มยำกุ้งน้ำใส 250 กรัม, ผักสด/ผักลวก 200 กรัม, ชมพู่/ส้ม 100 กรัม", reason: "ซุปใสย่อยง่ายก่อนนอน" }
+      { day:"วันอาทิตย์", theme:"ปิดสัปดาห์ด้วยสมุนไพร", meals:[
+        { time:"มื้อเช้า (คาร์บ 100g)", menu:"ข้าวกล้อง 100 กรัม, ไก่ต้มสมุนไพร 120 กรัม, แกงเลียง 300 กรัม", reason:"ตะไคร้ ใบมะกรูด ลดอักเสบ" },
+        { time:"มื้อเย็น (โลว์คาร์บ)", menu:"ต้มยำกุ้ง 250 กรัม, ผักสด/ลวก 200 กรัม, ชมพู่/ส้ม 100 กรัม", reason:"ซุปใสย่อยง่าย" }
       ]},
     ];
 
-    /* ========= STATE/UI ========= */
+    // ===== STATE/UI =====
     let completed = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
     if(!Array.isArray(completed) || completed.length !== mealData.length){
       completed = Array(mealData.length).fill(false);
       localStorage.setItem(STORAGE_KEY, JSON.stringify(completed));
     }
 
-    let profile = null; // { userId, displayName, pictureUrl }
+    let profile = null;
     const grid = document.getElementById('grid');
     const bar = document.getElementById('bar');
     const mini = document.getElementById('progress-mini');
     const profileCard = document.getElementById('profileCard');
     const profileForm = document.getElementById('profileForm');
 
-    function percentDone(){
-      const done = completed.filter(Boolean).length;
-      return Math.round((done/mealData.length)*100);
-    }
+    function percentDone(){ return Math.round((completed.filter(Boolean).length/mealData.length)*100); }
     function updateProgressUI(){
       const p = percentDone();
-      bar.style.setProperty('--val', p + '%');
-      bar.textContent = p + '%';
-      bar.setAttribute('aria-valuenow', p);
+      bar.style.setProperty('--val', p + '%'); bar.textContent = p + '%'; bar.setAttribute('aria-valuenow', p);
       mini.textContent = `${p}% สำเร็จ`;
     }
 
@@ -221,7 +192,6 @@
 
         const body = document.createElement('div');
         body.className='meal-body';
-
         d.meals.forEach(meal=>{
           const wrap = document.createElement('div');
           wrap.className='item';
@@ -232,12 +202,9 @@
           `;
           body.appendChild(wrap);
         });
-
         card.appendChild(body);
 
-        const check = document.createElement('span');
-        check.className='check'; check.textContent='✔️'; check.setAttribute('aria-hidden','true');
-        card.appendChild(check);
+        const check = document.createElement('span'); check.className='check'; check.textContent='✔️'; check.setAttribute('aria-hidden','true'); card.appendChild(check);
 
         const btn = document.createElement('button');
         btn.className = 'btn' + (completed[idx] ? ' done':'');
@@ -246,7 +213,7 @@
           completed[idx] = !completed[idx];
           localStorage.setItem(STORAGE_KEY, JSON.stringify(completed));
           renderCards(); updateProgressUI();
-          await onToggleDay(idx, completed[idx]); // <-- บันทึกไป Google Sheet
+          await onToggleDay(idx, completed[idx]); // บันทึกไปชีต
         });
         card.appendChild(btn);
 
@@ -254,129 +221,93 @@
       });
     }
 
-    /* ========= LIFF / PROFILE ========= */
+    // ===== LIFF / PROFILE =====
     async function initLiff(){
       try{
         await liff.init({ liffId: LIFF_ID });
         if(!liff.isLoggedIn()) liff.login();
         const p = await liff.getProfile();
-        profile = { userId: p.userId, displayName: p.displayName, pictureUrl: p.pictureUrl };
+        profile = { userId:p.userId, displayName:p.displayName, pictureUrl:p.pictureUrl };
       }catch(e){
         console.warn('LIFF init failed, continue as guest', e);
         profile = { userId:'guest', displayName:'Guest', pictureUrl:'' };
       }
     }
-
     function makeClientId(dayIndex, done){
-      const t = new Date().toISOString().slice(0,10); // YYYY-MM-DD
+      const t = new Date().toISOString().slice(0,10);
       return `${profile?.userId || 'guest'}:${t}:d${dayIndex}:${done?'1':'0'}`;
     }
-
     async function postProgress({ dayIndex, done, percent, phone='', email='', note='' }){
       const body = {
         userId: profile?.userId || 'guest',
         displayName: profile?.displayName || 'Guest',
         pictureUrl: profile?.pictureUrl || '',
-        phone, email,
-        dayIndex, done, percent,
-        clientId: makeClientId(dayIndex, done),
-        note
+        phone, email, dayIndex, done, percent,
+        clientId: makeClientId(dayIndex, done), note
       };
-      const res = await fetch(GAS_ENDPOINT,{
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body: JSON.stringify(body)
-      });
-      const json = await res.json();
-      if(!json.ok) throw new Error(json.error || 'post failed');
-      return json;
+      const res = await fetch(GAS_ENDPOINT, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(body) });
+      const json = await res.json(); if(!json.ok) throw new Error(json.error || 'post failed'); return json;
     }
-
     function queueOffline(payload){
-      const q = JSON.parse(localStorage.getItem(OFFLINE_KEY) || '[]');
-      q.push({ ts: Date.now(), ...payload });
+      const q = JSON.parse(localStorage.getItem(OFFLINE_KEY) || '[]'); q.push({ ts:Date.now(), ...payload });
       localStorage.setItem(OFFLINE_KEY, JSON.stringify(q));
     }
-
     async function flushQueue(){
-      const q = JSON.parse(localStorage.getItem(OFFLINE_KEY) || '[]');
-      if(!q.length) return;
+      const q = JSON.parse(localStorage.getItem(OFFLINE_KEY) || '[]'); if(!q.length) return;
       const p = percentDone();
-      for(const item of q){
-        try{ await postProgress({ dayIndex:item.idx, done:item.isDoneNow, percent:p }); }
-        catch(e){ console.warn('still offline'); return; }
-      }
+      for(const item of q){ try{ await postProgress({ dayIndex:item.idx, done:item.isDoneNow, percent:p }); }catch(e){ return; } }
       localStorage.removeItem(OFFLINE_KEY);
     }
-
     async function onToggleDay(idx, isDoneNow){
       const p = percentDone();
-      try{
-        await postProgress({ dayIndex: idx, done: isDoneNow, percent: p });
-        console.log('Saved to sheet');
-      }catch(e){
-        console.warn('Save failed, queue offline', e);
-        queueOffline({ idx, isDoneNow });
-      }
+      try{ await postProgress({ dayIndex:idx, done:isDoneNow, percent:p }); }
+      catch(e){ queueOffline({ idx, isDoneNow }); }
     }
 
-    /* ========= ส่งผลลัพธ์ให้โค้ช ========= */
     async function sendResultToCoach(){
       const p = percentDone();
       const days = mealData.map((d,i)=> completed[i] ? `✅ ${d.day}` : `⬜ ${d.day}`).join('\n');
       const text = `ผม/หนูทำแผน 7 วันไปแล้ว ${p}% 🎉\nความคืบหน้า:\n${days}\n\nขอรับคำแนะนำ/รางวัลจากโค้ชครับ 🙏`;
-
       try{
         if(!profile) await initLiff();
         if(window.liff && typeof liff.init==='function'){
           if(!liff.isLoggedIn()) liff.login();
           await liff.sendMessages([{ type:'text', text }]);
-          alert('ส่งผลลัพธ์สำเร็จแล้ว! โค้ชจะติดต่อกลับเร็ว ๆ นี้');
-        }else{
-          throw new Error('No LIFF');
-        }
+          alert('ส่งผลลัพธ์สำเร็จแล้ว!');
+        }else{ throw new Error('No LIFF'); }
       }catch(e){
         navigator.clipboard?.writeText(text);
-        alert('คัดลอกผลลัพธ์ไปยังคลิปบอร์ดแล้ว ✓\nวางในแชท LINE เพื่อส่งให้โค้ชได้เลย');
+        alert('คัดลอกข้อความแล้ว ✓ นำไปวางใน LINE เพื่อส่งให้โค้ช');
       }
     }
 
-    /* ========= จัดการโปรไฟล์ครั้งแรก ========= */
     function showProfileFormIfNeeded(){
       const saved = localStorage.getItem(PROFILE_KEY)==='1';
-      if(!saved) profileCard.hidden = false;
+      if(!saved) document.getElementById('profileCard').hidden = false;
     }
-    profileForm?.addEventListener('submit', async (e)=>{
-      e.preventDefault();
-      const phone = document.getElementById('phone').value.trim();
-      const email = document.getElementById('email').value.trim();
-      try{
-        await postProgress({ dayIndex:-1, done:false, percent:0, phone, email, note:'register' });
-        localStorage.setItem(PROFILE_KEY,'1');
-        profileCard.hidden = true;
-        alert('บันทึกข้อมูลติดต่อเรียบร้อย ✅');
-      }catch(err){
-        alert('บันทึกไม่สำเร็จ ลองใหม่อีกครั้ง');
-      }
-    });
 
-    /* ========= ปุ่มล่าง ========= */
     document.getElementById('sendBtn').addEventListener('click', sendResultToCoach);
     document.getElementById('resetBtn').addEventListener('click', ()=>{
-      if(confirm('ต้องการรีเซ็ตความคืบหน้าทั้งหมดใช่ไหม?')){
+      if(confirm('รีเซ็ตความคืบหน้าทั้งหมด?')){
         completed = Array(mealData.length).fill(false);
         localStorage.setItem(STORAGE_KEY, JSON.stringify(completed));
         renderCards(); updateProgressUI();
       }
     });
 
-    /* ========= INIT ========= */
     document.addEventListener('DOMContentLoaded', async ()=>{
       await initLiff();
       showProfileFormIfNeeded();
       await flushQueue();
-      renderCards();
-      updateProgressUI();
+      renderCards(); updateProgressUI();
+      // save profile (ครั้งแรก)
+      document.getElementById('profileForm')?.addEventListener('submit', async (e)=>{
+        e.preventDefault();
+        const phone = document.getElementById('phone').value.trim();
+        const email = document.getElementById('email').value.trim();
+        try{ await postProgress({ dayIndex:-1, done:false, percent:0, phone, email, note:'register' }); localStorage.setItem(PROFILE_KEY,'1'); document.getElementById('profileCard').hidden = true; alert('บันทึกข้อมูลติดต่อเรียบร้อย ✅'); }
+        catch(err){ alert('บันทึกไม่สำเร็จ ลองใหม่'); }
+      });
     });
   </script>
 </body>
