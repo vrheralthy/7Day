@@ -159,7 +159,7 @@
       ]}
     ];
 
-    // ===== STATE / UI =====
+    // ===== STATE/UI =====
     let completed = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
     if(!Array.isArray(completed) || completed.length !== mealData.length){
       completed = Array(mealData.length).fill(false);
@@ -219,7 +219,7 @@
           completed[idx] = !completed[idx];
           localStorage.setItem(STORAGE_KEY, JSON.stringify(completed));
           renderCards(); updateProgressUI();
-          await onToggleDay(idx, completed[idx]); // บันทึกไปชีต
+          await onToggleDay(idx, completed[idx]);
         });
         card.appendChild(btn);
 
@@ -311,7 +311,6 @@
       }
     }
 
-    // ===== ชื่อเล่น (ครั้งแรก) =====
     function showProfileFormIfNeeded(){
       const saved = localStorage.getItem(PROFILE_KEY)==='1';
       if(!saved) document.getElementById('profileCard').hidden = false;
@@ -332,7 +331,7 @@
       await flushQueue();
       renderCards(); updateProgressUI();
 
-      // บันทึกชื่อเล่น → dayIndex = -1 (register)
+      // บันทึกชื่อเล่นครั้งแรก
       document.getElementById('profileForm')?.addEventListener('submit', async (e)=>{
         e.preventDefault();
         const nickname = document.getElementById('nickname').value.trim();
