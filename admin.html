@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Admin • Healthy Meal Plan</title>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#0b1210;--panel:#111c17;--text:#e5e7eb;--muted:#94a3b8;--primary:#7ddc8a;--radius:12px}
+    body{margin:0;font-family:'Kanit',system-ui,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--text)}
+    .wrap{max-width:1100px;margin:0 auto;padding:18px}
+    .top{display:grid;gap:10px;grid-template-columns:1fr auto auto;align-items:center}
+    h1{margin:0;font-size:1.3rem}
+    .panel{background:var(--panel);border:1px solid #203428;border-radius:var(--radius);padding:14px;margin:14px 0}
+    input,button{font:inherit}
+    input{padding:10px;border-radius:10px;border:1px solid #204030;background:#0f1a14;color:var(--text)}
+    button{padding:10px 14px;border-radius:10px;border:1px solid #2b5a3b;background:var(--primary);color:#0b0b0b;font-weight:700;cursor:pointer}
+    button.secondary{background:transparent;color:var(--primary)}
+    table{width:100%;border-collapse:separate;border-spacing:0}
+    th,td{padding:10px;border-bottom:1px solid #213428;text-align:left}
+    th{position:sticky;top:0;background:#0f1a14}
+    .grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
+    .card{background:#0f1a14;border:1px solid #203428;border-radius:10px;padding:12px}
+    .muted{color:var(--muted)}
+    .badge{display:inline-block;background:#102316;border:1px solid #203428;border-radius:999px;padding:2px 8px;color:var(--primary);font-weight:700}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <h1>Admin • Healthy Meal Plan</h1>
+      <input id="endpoint" placeholder="GAS_ENDPOINT" size="42">
+      <input id="key" placeholder="ADMIN_KEY">
+      <button id="loadBtn">โหลดข้อมูล</button>
+    </div>
+
+    <div class="panel">
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <div>ค้นหา: <input id="search" placeholder="ชื่อผู้ใช้..."></div>
+        <button class="secondary" id="exportBtn">Export CSV</button>
+        <button class="secondary" id="rebuildBtn">Rebuild Dashboard Sheet</button>
+        <span class="muted" id="status">—</span>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3>สรุปต่อวัน</h3>
+      <div class="grid" id="byDay"></div>
+    </div>
+
+    <div class="panel">
+      <h3>สรุปต่อคน</h3>
+      <div style="overflow:auto;max-height:65vh">
+        <table id="tbl">
+          <thead>
+            <tr>
+              <th>ชื่อ</th><th>userId</th><th>% สูงสุด</th><th>สำเร็จ (วัน)</th>
+              <th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th><th>Sun</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+<script>
+  const endpointEl = document.getElementById('endpoint');
+  const keyEl = document.getElementById('key');
+  const statusEl = document.getElementById('status');
+  const searchEl = document.getElementById('search');
+  const tblBody = document.querySelector('#tbl tbody');
+  const byDayEl = document.getElementById('byDay');
+
+  // ค่าเริ่มต้น (จำไว้ใน LocalStorage)
+  endpointEl.value = localStorage.getItem('admin.endpoint') || 'https://script.google.com/macros/s/AKfycbyNKjdj-fCnZlfy7x4fmHScirMGEfHjvJmHKpGn-XO3UBzX5o_3ubERrYTLikIfLKWAdw/exec';
+  keyEl.value = localStorage.getItem('admin.key') || 'PUT_ADMIN_KEY_HERE';
+  let rawUsers = [];
+
+  function savePrefs(){ localStorage.setItem('admin.endpoint', endpointEl.value.trim()); localStorage.setItem('admin.key', keyEl.value.trim()); }
+
+  async function loadSummary(){
+    savePrefs();
+    const url = `${endpointEl.value.trim()}?action=summary&key=${encodeURIComponent(keyEl.value.trim())}`;
+    statusEl.textContent = 'กำลังโหลด...';
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('โหลดไม่สำเร็จ');
+    const json = await res.json();
+    if (!json.ok) throw new Error(json.error || 'error');
+    rawUsers = json.users || [];
+    renderUsers(rawUsers);
+    renderByDay(json.byDay || {});
+    statusEl.textContent = `โหลดแล้ว: ผู้ใช้ ${rawUsers.length} คน`;
+  }
+
+  function renderUsers(arr){
+    const q = searchEl.value.trim().toLowerCase();
+    const rows = arr.filter(u =>
+      (u.displayName||'').toLowerCase().includes(q) || (u.userId||'').toLowerCase().includes(q)
+    ).map(u=>{
+      const d=u.days||{};
+      return `<tr>
+        <td>${esc(u.displayName||'')}</td>
+        <td class="muted">${esc(u.userId||'')}</td>
+        <td><span class="badge">${u.percentMax??0}%</span></td>
+        <td>${u.daysDone??0}</td>
+        <td>${d[0]?'✅':'—'}</td><td>${d[1]?'✅':'—'}</td><td>${d[2]?'✅':'—'}</td>
+        <td>${d[3]?'✅':'—'}</td><td>${d[4]?'✅':'—'}</td><td>${d[5]?'✅':'—'}</td><td>${d[6]?'✅':'—'}</td>
+      </tr>`;
+    }).join('');
+    tblBody.innerHTML = rows || `<tr><td colspan="11" class="muted">ไม่พบข้อมูล</td></tr>`;
+  }
+
+  function renderByDay(byDay){
+    const days=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+    byDayEl.innerHTML = days.map((lab,i)=>`
+      <div class="card">
+        <div style="font-weight:700">${lab}</div>
+        <div class="muted">คนที่ทำสำเร็จ</div>
+        <div style="font-size:1.4rem">${byDay[i]||0}</div>
+      </div>`).join('');
+  }
+
+  function exportCSV(){
+    if(!rawUsers.length) return;
+    const header=['displayName','userId','percentMax','daysDone','Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+    const rows = rawUsers.map(u=>{
+      const d=u.days||{};
+      return [
+        q(u.displayName), q(u.userId), u.percentMax??0, u.daysDone??0,
+        d[0]?1:0,d[1]?1:0,d[2]?1:0,d[3]?1:0,d[4]?1:0,d[5]?1:0,d[6]?1:0
+      ].join(',');
+    });
+    const csv=[header.join(','),...rows].join('\n');
+    const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
+    const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='mealplan-admin.csv'; a.click();
+  }
+
+  async function rebuildSheet(){
+    savePrefs();
+    const url = `${endpointEl.value.trim()}?action=rebuildAdminSheet&key=${encodeURIComponent(keyEl.value.trim())}`;
+    const res = await fetch(url); const json = await res.json();
+    alert(json.ok ? 'รีบิวด์แดชบอร์ดบนชีตเรียบร้อย' : ('ไม่สำเร็จ: '+(json.error||'unknown')));
+  }
+
+  function esc(s=''){return s.replace(/[&<>"']/g,m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;' }[m]));}
+  function q(s=''){return `"${String(s).replace(/"/g,'""')}"`;}
+
+  document.getElementById('loadBtn').addEventListener('click', loadSummary);
+  document.getElementById('exportBtn').addEventListener('click', exportCSV);
+  document.getElementById('rebuildBtn').addEventListener('click', rebuildSheet);
+  document.getElementById('search').addEventListener('input', ()=> renderUsers(rawUsers));
+</script>
+</body>
+</html>
