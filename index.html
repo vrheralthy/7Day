@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Healthy Meal Plan 7 Days</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://static.line-scdn.net/liff/edge/versions/2.26.0/sdk.js"></script>
     <style>
         :root {
             --primary-color: #4CAF50;
@@ -217,7 +218,7 @@
             margin: 20px 0;
         }
 
-        .cta-section a {
+        .cta-button {
             display: inline-block;
             background-color: white;
             color: var(--primary-color);
@@ -227,9 +228,11 @@
             font-weight: 600;
             font-size: 1.1rem;
             transition: transform 0.3s ease;
+            border: none;
+            cursor: pointer;
         }
         
-        .cta-section a:hover {
+        .cta-button:hover {
             transform: scale(1.05);
         }
         
@@ -297,7 +300,7 @@
         <section class="cta-section">
             <h2>ทำครบ 7 วันแล้วใช่ไหม?</h2>
             <p>ถ้าทำตามแผนครบ 7 วันแล้ว ส่งผลลัพธ์ให้โค้ชของคุณที่ LINE OA เพื่อรับรางวัลพิเศษได้เลย! ^_^</p>
-            <a href="https://lin.ee/LZzwkdX" target="_blank">ส่งผลลัพธ์ให้โค้ช</a>
+            <button class="cta-button" onclick="sendResultToCoach()">ส่งผลลัพธ์ให้โค้ช</button>
         </section>
 
     </main>
@@ -321,6 +324,30 @@
             const mealCardsContainer = document.getElementById('meal-cards');
             const progressBar = document.getElementById('progress-bar');
             let completedDays = 0;
+
+            // **ส่วนที่เพิ่มเข้ามา: LIFF init**
+            liff.init({ liffId: '2007996778-xk36NJZZ' })
+                .then(() => {
+                    // Start rendering the page after LIFF is initialized
+                    loadProgress();
+                    createMealCards();
+                    
+                    const cards = document.querySelectorAll('.meal-card');
+                    for(let i = 0; i < completedDays; i++) {
+                        if (cards[i]) {
+                            cards[i].classList.add('completed');
+                            const btn = cards[i].querySelector('.progress-btn');
+                            if (btn) {
+                                btn.classList.add('completed');
+                                btn.textContent = 'วันนี้ทำสำเร็จแล้ว!';
+                            }
+                        }
+                    }
+                })
+                .catch((err) => {
+                    console.error('LIFF initialization failed', err);
+                    alert('เกิดข้อผิดพลาดในการเชื่อมต่อกับ LINE กรุณาลองใหม่อีกครั้ง');
+                });
 
             const updateProgressBar = () => {
                 const totalDays = mealData.length;
@@ -398,20 +425,22 @@
                 });
             };
 
-            loadProgress();
-            createMealCards();
-            
-            const cards = document.querySelectorAll('.meal-card');
-            for(let i = 0; i < completedDays; i++) {
-                if (cards[i]) {
-                    cards[i].classList.add('completed');
-                    const btn = cards[i].querySelector('.progress-btn');
-                    if (btn) {
-                        btn.classList.add('completed');
-                        btn.textContent = 'วันนี้ทำสำเร็จแล้ว!';
-                    }
+            // **ส่วนที่เพิ่มเข้ามา: ฟังก์ชันการส่งข้อความผ่าน LIFF**
+            window.sendResultToCoach = () => {
+                if (!liff.isLoggedIn()) {
+                    liff.login();
+                } else {
+                    liff.sendMessages([{
+                        type: 'text',
+                        text: 'ผม/หนูทำตามแผน 7 วันครบแล้วครับ! 🎉 ขอรับรางวัลจากโค้ชครับ'
+                    }]).then(() => {
+                        window.alert('ส่งผลลัพธ์สำเร็จแล้วครับ! โค้ชจะติดต่อกลับในไม่ช้า');
+                    }).catch((err) => {
+                        console.error('Error sending message:', err);
+                        window.alert('เกิดข้อผิดพลาดในการส่งข้อความ');
+                    });
                 }
-            }
+            };
         });
     </script>
 </body>
